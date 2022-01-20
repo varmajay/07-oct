@@ -1,8 +1,9 @@
 import re
+from django.http import JsonResponse
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from .models import *
-from random import randrange
+from random import choices, randrange
 from django.conf import settings
 from django.core.mail import send_mail
 from json import loads
@@ -10,10 +11,25 @@ from json import loads
 # Create your views here.
 
 def index(request):
-    return render(request,'index.html')
+    uid = Seller.objects.get(email=request.session['email'])
+    return render(request,'index.html',{'uid':uid})
 
 def login(request):
-    return render(request,'login.html')
+    try:
+        uid = Seller.objects.get(email=request.session['email'])
+        return redirect('index')
+    except:
+        if request.method == 'POST':
+            try:
+                uid = Seller.objects.get(email=request.POST['email'])
+                if request.POST['password'] == uid.password:
+                    request.session['email'] = request.POST['email']
+                    return redirect('index')
+                return render(request,'login.html',{'msg':'incorrect password'})
+            except:
+                msg = 'Email is not register'
+                return render(request,'login.html',{'msg':msg})
+        return render(request,'login.html')
 
 def register(request):
     if request.method == 'POST':
@@ -49,7 +65,8 @@ def register(request):
     return render(request,'register.html')
 
 def profile(request):
-    return render(request,'profile.html')
+    uid = Seller.objects.get(email=request.session['email'])
+    return render(request,'profile.html',{'uid':uid})
 
 def tables(request):
     return render(request,'tables.html')
@@ -75,3 +92,26 @@ def otp(request):
         return render(request,'otp.html',{'msg':'Invalid OTP','otp':request.POST['otp'],'data':request.POST['data']})
 
     return render(request,'login.html')
+
+def logout(request):
+    del request.session['email']
+    return redirect('login')
+
+def forgot_password(request):
+    if request.method == 'POST':
+        try:
+            uid = Seller.objects.get(email=request.POST['email'])
+            password = ''.join(choices('qwyertovghlk34579385',k=8))
+            subject = 'Reset Password'
+            message = f"""Hello {uid.name},
+            Your Password  is {password}"""
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [request.POST['email'], ]
+            send_mail( subject, message, email_from, recipient_list )
+            uid.password = password
+            uid.save()
+            return JsonResponse({'msg':'New pass is sent on your email'})
+        except:
+            msg = 'Email is not register'
+            return JsonResponse({'msg':msg})
+    return render(request,'forgot-password.html')
