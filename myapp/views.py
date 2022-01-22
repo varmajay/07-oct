@@ -66,6 +66,15 @@ def register(request):
 
 def profile(request):
     uid = Seller.objects.get(email=request.session['email'])
+    if request.method == 'POST':
+        uid.name = request.POST['name']
+        uid.email = request.POST['email']
+        uid.mobile = request.POST['mobile']
+        uid.address = request.POST['address']
+        if 'pic' in request.FILES:
+            uid.pic = request.FILES['pic']
+        uid.save()
+
     return render(request,'profile.html',{'uid':uid})
 
 def tables(request):
@@ -115,3 +124,4 @@ def forgot_password(request):
             msg = 'Email is not register'
             return JsonResponse({'msg':msg})
     return render(request,'forgot-password.html')
+
