@@ -1,4 +1,6 @@
+from itertools import product
 import re
+from tkinter import EW
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -125,3 +127,32 @@ def forgot_password(request):
             return JsonResponse({'msg':msg})
     return render(request,'forgot-password.html')
 
+def add_product(request):
+    uid = Seller.objects.get(email=request.session['email'])
+    categorys = Category.objects.all()
+    if request.method == 'POST':
+        # if 'pic' in request.FILES:
+        Product.objects.create(
+            uid = uid,
+            name = request.POST['name'],
+            price = int(request.POST['price']),
+            des = request.POST['des'],
+            pic = request.FILES['pic']  if 'pic' in request.FILES else None,
+            category = request.POST['category']
+        )
+        msg = 'Product Added'
+        # else:
+        #     Product.objects.create(
+        #         uid = uid,
+        #         name = request.POST['name'],
+        #         price = int(request.POST['price']),
+        #         des = request.POST['des'],
+        #     )
+        return render(request,'add-product.html',{'uid':uid,'categories':categorys,'msg':msg})
+    return render(request,'add-product.html',{'uid':uid,'categories':categorys})
+
+
+def my_products(request):
+    uid = Seller.objects.get(email=request.session['email'])
+    products = Product.objects.filter(uid=uid)[::-1]
+    return render(request,'my-products.html',{'uid':uid,'products':products})

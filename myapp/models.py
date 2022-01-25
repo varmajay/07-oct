@@ -1,4 +1,6 @@
+from unicodedata import category
 from django.db import models
+from django.shortcuts import render
 
 # Create your models here.
 
@@ -18,3 +20,24 @@ class Seller(models.Model):
 
     def __str__(self):
         return self.name + ' @  ' + self.email
+
+
+class Product(models.Model):
+
+    uid = models.ForeignKey(Seller,on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    price = models.IntegerField(default=0)
+    des = models.TextField()
+    pic = models.FileField(upload_to='Products',null=True,blank=True)
+    category = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.uid.name + ' @ ' + self.name
+
+class Category(models.Model):
+    name = models.CharField(max_length=50)
+    value = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.name
+

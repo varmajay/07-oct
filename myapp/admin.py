@@ -10,3 +10,5 @@ from myapp.models import *
 class AdminSeller(admin.ModelAdmin):
     list_display = ['name','email','mobile','verify']
 
+admin.site.register(Product)
+admin.site.register(Category)

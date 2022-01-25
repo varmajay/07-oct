@@ -1,0 +1,98 @@
+{% extends 'header.html' %}
+{% load static %}
+
+{% block title %}
+<title>Profile Change</title>
+{% endblock %}
+
+
+
+{% block content %}
+    <!-- Header -->
+    <!-- Header -->
+    <br><br><br><br><br>
+    <!-- Page content -->
+    <div class="container-fluid mt--6">
+      <div class="row">
+        
+        <div class="col-xl-8 order-xl-1">
+          <div class="card">
+            <div class="card-header">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Add Product </h3>
+                </div>
+                <div class="col-4 text-right">
+                  <a href="#!" class="btn btn-sm btn-primary">Settings</a>
+                </div>
+              </div>
+            </div>
+            {{msg}}
+            <div class="card-body">
+              <form action="{% url 'add-product' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h6 class="heading-small text-muted mb-4">Product information</h6>
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-username">Product Name</label>
+                        <input type="text" id="input-username" name="name" class="form-control" placeholder="Username">
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-email">Product price</label>
+                        <input type="text" id="input-email" class="form-control" name="price" placeholder="jesse@example.com">
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-first-name">Category</label>
+                        <select name="category" class="form-control" id="">
+                            <option value="">--</option>
+                            {% for cate in categories %}
+                            <option value="{{cate.value}}">{{cate.name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-last-name">Product Pic</label>
+                        
+                        <input type="file" id="input-last-name" class="form-control"  name="pic" placeholder="Last name" >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Address -->
+                <div class="pl-lg-4">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="form-control-label" for="input-address">Product Des</label>
+                        <textarea name="des" class="form-control" id="" cols="30" rows="10"></textarea>
+                    </div>
+                    </div>
+                  </div>
+                  
+                </div>
+                <!-- <hr class="my-4" />
+                <h6 class="heading-small text-muted mb-4">About me</h6>
+                <div class="pl-lg-4">
+                  <div class="form-group">
+                    <label class="form-control-label">About Me</label>
+                    <textarea rows="4" class="form-control" placeholder="A few words about you ...">A beautiful Dashboard for Bootstrap 4. It is Free and Open Source.</textarea>
+                  </div>
+                </div> -->
+                <button class="btn btn-primary" type="submit" style="margin-left: 20px;"><i class="fa fa-shopping-bag"></i> Add Product</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endblock %}
+      <!-- Footer -->

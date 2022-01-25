@@ -10,4 +10,6 @@ urlpatterns = [
     path('otp/',views.otp, name='otp'),
     path('logout/',views.logout, name='logout'),
     path('forgot-password/',views.forgot_password, name='forgot-password'),
+    path('add-product',views.add_product,name='add-product'),
+    path('my-products',views.my_products,name='my-products'),
 ]
