@@ -30,6 +30,8 @@ class Product(models.Model):
     des = models.TextField()
     pic = models.FileField(upload_to='Products',null=True,blank=True)
     category = models.CharField(max_length=100)
+    quantity = models.IntegerField(default=0)
+    active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.uid.name + ' @ ' + self.name

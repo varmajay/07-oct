@@ -1,6 +1,4 @@
-from itertools import product
 import re
-from tkinter import EW
 from django.http import JsonResponse
 from django.http.response import HttpResponse
 from django.shortcuts import redirect, render
@@ -138,7 +136,8 @@ def add_product(request):
             price = int(request.POST['price']),
             des = request.POST['des'],
             pic = request.FILES['pic']  if 'pic' in request.FILES else None,
-            category = request.POST['category']
+            category = request.POST['category'],
+            quantity = request.POST['quantity']
         )
         msg = 'Product Added'
         # else:
@@ -156,3 +155,38 @@ def my_products(request):
     uid = Seller.objects.get(email=request.session['email'])
     products = Product.objects.filter(uid=uid)[::-1]
     return render(request,'my-products.html',{'uid':uid,'products':products})
+
+
+def delete_product(request,pk):
+    product = Product.objects.get(id=pk)
+    product.delete()
+    return redirect('my-products')
+
+def edit_product(request,pk):
+    uid = Seller.objects.get(email=request.session['email'])
+    product = Product.objects.get(id=pk)
+    categories = Category.objects.all()
+    if request.method == 'POST':
+        product.name = request.POST['name']
+        product.price = request.POST['price']
+        product.des = request.POST['des']
+        product.category = request.POST['category']
+        if 'pic' in request.FILES:
+            product.pic = request.FILES['pic']
+        product.quantity = request.POST['quantity']
+        product.save()
+        return render(request,'edit-product.html',{'uid':uid,'product':product,'categories':categories,'msg':'Product has been updated'})
+    return render(request,'edit-product.html',{'uid':uid,'product':product,'categories':categories})
+
+
+def disable_product(request,pk):
+    product = Product.objects.get(id=pk)
+    product.active = False
+    product.save()
+    return redirect('my-products')
+
+def enable_product(request,pk):
+    product = Product.objects.get(id=pk)
+    product.active = True
+    product.save()
+    return redirect('my-products')
