@@ -190,3 +190,6 @@ def enable_product(request,pk):
     product.active = True
     product.save()
     return redirect('my-products')
+
+def bought_product(request):
+    return render(request,'bought-product.html')

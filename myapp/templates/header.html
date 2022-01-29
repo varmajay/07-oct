@@ -37,12 +37,15 @@
         <div class="collapse navbar-collapse" id="sidenav-collapse-main">
           <!-- Nav items -->
           <ul class="navbar-nav">
+            {% block home %}
             <li class="nav-item">
-              <a class="nav-link active" href="{% url 'index' %}">
+              <a class="nav-link" href="{% url 'index' %}">
                 <i class="ni ni-tv-2 text-primary"></i>
                 <span class="nav-link-text">Home</span>
               </a>
             </li>
+            {% endblock %}
+            {% block add-product %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'add-product' %}">
                 <!-- <i class="ni ni-planet text-orange"></i> -->
@@ -50,11 +53,19 @@
                 <span class="nav-link-text">Add Products</span>
               </a>
             </li>
+            {% endblock %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'my-products' %}">
                 <!-- <i class="ni ni-pin-3 text-primary"></i> -->
                 <i class="fas fa-shopping-bag"></i>
                 <span class="nav-link-text">My Products</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'bought-product' %}">
+                <!-- <i class="ni ni-pin-3 text-primary"></i> -->
+                <i class="fas fa-shopping-bag"></i>
+                <span class="nav-link-text">Bought Products</span>
               </a>
             </li>
             <li class="nav-item">

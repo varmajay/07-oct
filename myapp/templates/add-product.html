@@ -5,6 +5,15 @@
 <title>Profile Change</title>
 {% endblock %}
 
+{% block add-product %}
+<li class="nav-item">
+  <a class="nav-link active" href="{% url 'add-product' %}">
+    <!-- <i class="ni ni-planet text-orange"></i> -->
+    <i class="fas fa-shopping-bag" style="color: red;"></i>
+    <span class="nav-link-text">Add Products</span>
+  </a>
+</li>
+{% endblock %}
 
 
 {% block content %}
