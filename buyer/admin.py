@@ -6,3 +6,5 @@ from .models import *
 @admin.register(Buyer)
 class BuyerAdmin(admin.ModelAdmin):
     list_display = ['name','email','mobile']
+
+    
