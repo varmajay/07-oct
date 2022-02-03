@@ -13,3 +13,8 @@ def about(request):
 
 def contact(request):
     return render(request,'contact.html')
+
+def view_product(request,pk):
+    product = sm.Product.objects.get(id=pk)
+    reco = sm.Product.objects.filter(category=product.category)[:4]
+    return render(request,'view-product.html',{'product':product,'reco':reco})

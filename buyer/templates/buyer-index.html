@@ -25,7 +25,8 @@
 						<figure>
 							<img src="{{product.pic.url}}" width="100px" height="100px" alt="Image" class="img-fluid tm-gallery-img" />
 							<figcaption>
-								<h4 class="tm-gallery-title">{{product.name}}</h4>
+
+								<a href="{% url 'view-product' product.id %}"><h4 class="tm-gallery-title">{{product.name}}</h4></a>
 								<p class="tm-gallery-description">{{product.des}}</p>
 								<p class="tm-gallery-price"><i class="fa fa-rupee"></i> {{product.price}}</p>
 							</figcaption>

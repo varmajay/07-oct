@@ -1,4 +1,5 @@
 from django.db import models
+from myapp.models import Product
 
 # Create your models here.
 
@@ -12,3 +13,12 @@ class Buyer(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Cart(models.Model):
+    uid = models.ForeignKey(Buyer,on_delete=models.CASCADE)
+    product = models.ForeignKey(Product,on_delete=models.CASCADE)
+
+# class Buy(models.Model):
+
+#     j = models.CharField(max_length=56)
