@@ -1,0 +1,43 @@
+{% extends 'buyer-header.html' %}
+{% load static %}
+{% block content %}
+<br><br><br>
+
+	<div class="row">
+		<div class="col-6">
+			<form action="{% url 'search' %}" method="POST">
+				{% csrf_token %}
+				<input type="text" name="search" placeholder="Search product">
+				<button class="btn btn-primary">Search</button>
+			</form>
+		</div>
+	</div>
+			
+			<div class="tm-container-inner tm-persons">
+				<div class="row">
+					{% for product in pro %}
+					<article class="col-lg-6">
+						<figure class="tm-person">
+							<img src="{{product.pic.url}}" alt="Image" class="img-fluid tm-person-img" />
+							<figcaption class="tm-person-description">
+								<h4 class="tm-person-name">{{product.name}}</h4>
+								<p class="tm-person-title">Founder and CEO</p>
+								<p class="tm-person-about">Vivamus cursus leo nec sem feugiat sagittis.
+								Duis ut feugiat odio, sit amet accumsan
+								odio.</p>
+								<div>
+									<a href="https://fb.com" class="tm-social-link"><i class="fab fa-facebook tm-social-icon"></i></a>
+									<a href="https://twitter.com" class="tm-social-link"><i class="fab fa-twitter tm-social-icon"></i></a>
+									<a href="https://instagram.com" class="tm-social-link"><i class="fab fa-instagram tm-social-icon"></i></a>
+								</div>
+							</figcaption>
+						</figure>
+					</article>
+					{% endfor %}
+					
+				</div>
+			</div>
+			
+		</main>
+
+{% endblock%}

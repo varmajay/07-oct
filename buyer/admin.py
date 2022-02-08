@@ -7,4 +7,6 @@ from .models import *
 class BuyerAdmin(admin.ModelAdmin):
     list_display = ['name','email','mobile']
 
-    
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ['uid']

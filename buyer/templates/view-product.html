@@ -215,6 +215,7 @@ label.radio {
                         <div class="col-md-6 info">
                             <div class="row title">
                                 <div class="col">
+                                    <h3>"{{msg}}</h3>
                                     <h2>{{product.name}}</h2>
                                 </div>
                                 <div class="col text-right"><a href="#"><i class="fa fa-heart-o"></i></a></div>
@@ -232,7 +233,7 @@ label.radio {
 
                     </div>
                     <div class="row lower">
-                        <div class="col text-right align-self-center"> <button class="btn">Add to cart</button> </div>
+                        <a href="{% url 'add-to-cart' product.id %}"><div class="col text-right align-self-center"> <button class="btn">Add to cart</button> </div></a>
                     </div>
                 </div>
             </div>
